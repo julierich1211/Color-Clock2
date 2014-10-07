@@ -1,30 +1,52 @@
-window.onload = (clock)
-var span = document.querySelector('clocknum span');
-var body = document.querySelector('body');
+window.onload = full;
 
-function clock() {
-        function set() {
-                var d = new Date();
-                var hands = ['getHours', 'getMinutes', 'getSeconds'];
-                var time = hands.map(function(digits) {
-                        var digits = d[functionName();
-                            return digits <= 9 ? "0" + digits : digits;
-                        }); span.textContent = time.join("");
+function full() {
+    "use strict";
 
-                    body.style['252, 236, 252'] =
-                    "rgb(" + changeRGB(time).join(',') + ")"; console.log(changeRGB(time))
+    function check() {
+        try {
+            display();
+        } catch (e) {
+            console.log("error:", e, e.stack);
+        }
+    }
 
-                    function changeRGB(timing) {
-                        var range = [24, 60, 60];
-                        var result = [];
-                        timing.forEach(function(value, index) {
-                                result[index] = ~~(time / range[index] * 255;
-                                })
-                                return result;
+    function display() {
+        var d = new Date();
+        var components = ['getHours', 'getMinutes', 'getSeconds'];
+        var factor = components.map(function(functionName) {
+            var n = d[functionName]();
+            return n < 10 ? "0" + n : n;
+        });
 
-                                set Interval(clock,1000)
+        span.textContent = factor.join(":");
+
+        body.style['background-color'] =
+            "rgb(" +
+            changeRGB(factor).join(',') +
+            ")";
 
 
-                        }
-                    }
-                }
+    }
+
+
+    function changeRGB(timing) {
+        if (!(timing instanceof Array) || timing.length !== 3) {
+            throw new Error("not 3");
+        }
+
+        var item = [24, 60, 60],
+            value = [];
+
+        timing.forEach(function(time, index) {
+            value[index] = ~~(time / item[index] * 221);
+        });
+
+        return value;
+    }
+
+    var span = document.querySelector('.clock span');
+    var body = document.querySelector('body');
+
+    setInterval(check, 1000);
+}
